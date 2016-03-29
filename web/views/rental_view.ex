@@ -6,7 +6,7 @@ defmodule Superrentals.RentalView do
   end
 
   def render("show.json", %{rental: rental}) do
-    %{rentals: render_one(rental, Superrentals.RentalView, "rental.json")}
+    %{rental: render_one(rental, Superrentals.RentalView, "rental.json")}
   end
 
   def render("rental.json", %{rental: rental}) do

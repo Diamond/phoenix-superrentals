@@ -11,13 +11,13 @@ defmodule Superrentals.RentalControllerTest do
 
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, rental_path(conn, :index)
-    assert json_response(conn, 200)["data"] == []
+    assert json_response(conn, 200)["rentals"] == []
   end
 
   test "shows chosen resource", %{conn: conn} do
     rental = Repo.insert! %Rental{}
     conn = get conn, rental_path(conn, :show, rental)
-    assert json_response(conn, 200)["data"] == %{"id" => rental.id,
+    assert json_response(conn, 200)["rental"] == %{"id" => rental.id,
       "title" => rental.title,
       "owner" => rental.owner,
       "city" => rental.city,
@@ -34,7 +34,7 @@ defmodule Superrentals.RentalControllerTest do
 
   test "creates and renders resource when data is valid", %{conn: conn} do
     conn = post conn, rental_path(conn, :create), rental: @valid_attrs
-    assert json_response(conn, 201)["data"]["id"]
+    assert json_response(conn, 201)["rental"]["id"]
     assert Repo.get_by(Rental, @valid_attrs)
   end
 
@@ -46,7 +46,7 @@ defmodule Superrentals.RentalControllerTest do
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
     rental = Repo.insert! %Rental{}
     conn = put conn, rental_path(conn, :update, rental), rental: @valid_attrs
-    assert json_response(conn, 200)["data"]["id"]
+    assert json_response(conn, 200)["rental"]["id"]
     assert Repo.get_by(Rental, @valid_attrs)
   end
 
